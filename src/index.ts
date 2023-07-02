@@ -1,16 +1,22 @@
-import express from 'express'
+import http from 'http'
 import dotenv from 'dotenv'
+import express from 'express'
+import router from './routes'
+import bodyParser from 'body-parser'
+import connectDB from './utils/connectDB'
 
 dotenv.config()
 
 const app = express()
+const PORT = process.env.PORT || 8080
+const server = http.createServer(app)
 
-const PORT = process.env.PORT
-
-app.get('/', (req, res) => {
-  res.send('Hello world')
-})
-
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log('Server running at port', PORT)
 })
+
+connectDB()
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use('/api/v1', router())
