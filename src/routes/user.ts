@@ -1,5 +1,7 @@
 import { Router } from 'express'
 import {
+  activateUser,
+  deactivateUser,
   deleteUser,
   getAllUsers,
   getMe,
@@ -16,4 +18,6 @@ export default (router: Router) => {
   router.get('/user/:id', auth, isAdmin, getUser)
   router.delete('/user/:id', auth, isAdmin, deleteUser)
   router.put('/user/:id', auth, isAdmin, updateUser)
+  router.put('/user/activate/:id', auth, isAdmin, activateUser)
+  router.put('/user/deactivate/:id', auth, isAdmin, deactivateUser)
 }

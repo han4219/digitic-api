@@ -29,6 +29,7 @@ export const getMe = async (req: Request | HavingIdentity, res: Response) => {
       data: pick(
         user,
         '_id',
+        'isActive',
         'firstname',
         'lastname',
         'email',
@@ -72,6 +73,7 @@ export const updateMe = async (
       data: pick(
         updatedUser,
         '_id',
+        'isActive',
         'firstname',
         'lastname',
         'email',
@@ -167,6 +169,54 @@ export const updateUser = async (req: Request, res: Response) => {
   } catch (error) {
     return res.status(400).json({
       message: `Invalid user id, ${(error as any).message}`,
+    })
+  }
+}
+
+// Activate user
+export const activateUser = async (req: Request, res: Response) => {
+  const { id } = req.params
+
+  try {
+    const activatedUser = await User.findByIdAndUpdate(
+      id,
+      {
+        isActive: true,
+      },
+      { new: true }
+    )
+
+    return res.status(200).json({
+      message: 'Success',
+      data: activatedUser,
+    })
+  } catch (error) {
+    return res.status(422).json({
+      message: 'Id is invalid.',
+    })
+  }
+}
+
+// Deactivate user
+export const deactivateUser = async (req: Request, res: Response) => {
+  const { id } = req.params
+
+  try {
+    const deactivatedUser = await User.findByIdAndUpdate(
+      id,
+      {
+        isActive: false,
+      },
+      { new: true }
+    )
+
+    return res.status(200).json({
+      message: 'Success',
+      data: deactivatedUser,
+    })
+  } catch (error) {
+    return res.status(422).json({
+      message: 'Id is invalid.',
     })
   }
 }

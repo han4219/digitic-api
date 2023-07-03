@@ -28,6 +28,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: role.CLIENT,
     },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
     cart: {
       type: Array,
       default: [],
