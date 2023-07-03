@@ -3,6 +3,7 @@ import User from '../models/User'
 import { isEmail } from '../utils/helper'
 import PasswordService from '../PasswordService'
 import { omit, pick } from 'lodash'
+import { generateToken } from '../utils/jwtToken'
 
 const requiredFields = ['firstname', 'lastname', 'mobile', 'email', 'password']
 
@@ -65,7 +66,11 @@ export const register = async (req: express.Request, res: express.Response) => {
       },
     })
   } catch (error) {
-    console.log(error, 'error')
+    if ((error as any).message?.includes('mobile')) {
+      return res.status(422).json({
+        message: 'Phone number is already in use.',
+      })
+    }
     return res.status(500).json({
       message: `Something went wrong, ${(error as any).message}`,
     })
@@ -109,15 +114,17 @@ export const login = async (req: express.Request, res: express.Response) => {
     return res.status(200).json({
       message: 'Success',
       data: {
-        user: pick(foundUser, [
-          '_id',
-          'firstname',
-          'lastname',
-          'email',
-          'mobile',
-          'createdAt',
-          'updatedAt',
-        ]),
+        user: {
+          ...pick(foundUser, [
+            '_id',
+            'firstname',
+            'lastname',
+            'email',
+            'role',
+            'mobile',
+          ]),
+          token: generateToken(foundUser._id.toString()),
+        },
       },
     })
   } catch (error) {

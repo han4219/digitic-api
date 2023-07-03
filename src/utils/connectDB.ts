@@ -1,7 +1,8 @@
 import * as mongoose from 'mongoose'
+import config from '../config'
 
 const connectDB = () => {
-  const URI = process.env.MONGODB_URI || ''
+  const URI = config().mongoDBURI || ''
 
   mongoose
     .connect(URI, {

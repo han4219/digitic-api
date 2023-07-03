@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { role } from '../utils/role'
 
 const userSchema = new mongoose.Schema(
   {
@@ -17,13 +18,22 @@ const userSchema = new mongoose.Schema(
     },
     mobile: {
       type: String,
-      required: true,
       unique: true,
     },
     password: {
       type: String,
       required: true,
     },
+    role: {
+      type: String,
+      default: role.CLIENT,
+    },
+    cart: {
+      type: Array,
+      default: [],
+    },
+    address: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }],
+    wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
   },
   {
     timestamps: true,
@@ -31,4 +41,6 @@ const userSchema = new mongoose.Schema(
 )
 
 const User = mongoose.model('User', userSchema)
+
+export type UserType = mongoose.InferSchemaType<typeof userSchema>
 export default User

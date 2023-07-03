@@ -4,11 +4,12 @@ import express from 'express'
 import router from './routes'
 import bodyParser from 'body-parser'
 import connectDB from './utils/connectDB'
+import config from './config'
 
 dotenv.config()
 
 const app = express()
-const PORT = process.env.PORT || 8080
+const PORT = config().port || 8080
 const server = http.createServer(app)
 
 server.listen(PORT, () => {
