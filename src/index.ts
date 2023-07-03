@@ -6,6 +6,7 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import connectDB from './utils/connectDB'
 import config from './config'
+import morgan from 'morgan'
 
 dotenv.config()
 
@@ -22,4 +23,5 @@ connectDB()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
+app.use(morgan('dev'))
 app.use('/api/v1', router())
