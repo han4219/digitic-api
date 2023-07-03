@@ -1,15 +1,16 @@
 import { Router } from 'express'
+
+import { auth, isAdmin } from '../middlewares/auth'
 import {
-  activateUser,
-  deactivateUser,
-  deleteUser,
-  getAllUsers,
   getMe,
   getUser,
   updateMe,
+  deleteUser,
   updateUser,
+  getAllUsers,
+  activateUser,
+  deactivateUser,
 } from '../controllers/UserController'
-import { auth, isAdmin } from '../middlewares/auth'
 
 export default (router: Router) => {
   router.get('/users', auth, isAdmin, getAllUsers)
