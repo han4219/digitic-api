@@ -1,7 +1,5 @@
 import mongoose from 'mongoose'
-import * as crypto from 'crypto'
 import { role } from '../utils/role'
-import * as bcrypt from 'bcrypt'
 
 interface IUserMethods {
   createPasswordResetToken(): Promise<string>
@@ -21,8 +19,8 @@ interface IUser {
   wishlist: mongoose.Schema.Types.ObjectId
   refreshToken: string
   passwordChangedAt: Date
-  passwordResetToken: string
-  passwordResetExpires: Date
+  passwordResetToken: string | null
+  passwordResetExpires: Date | null
 }
 
 const userSchema = new mongoose.Schema<IUser, {}, IUserMethods>(

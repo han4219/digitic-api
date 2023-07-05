@@ -17,5 +17,5 @@ export default (router: Router) => {
   router.post('/refreshToken', refreshToken)
   router.post('/forgot-password', sendMailForgotPassword)
   router.put('/auth/password/update', auth, updatePassword)
-  router.post('/auth/reset-password/:token', resetPassword)
+  router.put('/auth/reset-password/:token', resetPassword)
 }

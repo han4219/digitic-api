@@ -16,12 +16,10 @@ export const sendEmail = async (data: {
   })
 
   const info = await transporter.sendMail({
-    from: config().mail.user, // sender address
+    from: '"Hey 🙋🏻‍♂️" <digitic@gmail.com>', // sender address
     to: data.to, // list of receivers
     subject: data.subject, // Subject line
     text: data.text, // plain text body
     html: data.html, // html body
   })
-
-  console.log(info)
 }
