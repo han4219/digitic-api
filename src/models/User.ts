@@ -1,7 +1,31 @@
 import mongoose from 'mongoose'
+import * as crypto from 'crypto'
 import { role } from '../utils/role'
+import * as bcrypt from 'bcrypt'
 
-const userSchema = new mongoose.Schema(
+interface IUserMethods {
+  createPasswordResetToken(): Promise<string>
+  isPasswordMatched(enteredPassword: string): Promise<boolean>
+}
+
+interface IUser {
+  firstname: string
+  lastname: string
+  email: string
+  mobile: string
+  password: string
+  role: string
+  isActive: boolean
+  cart: any
+  address: mongoose.Schema.Types.ObjectId
+  wishlist: mongoose.Schema.Types.ObjectId
+  refreshToken: string
+  passwordChangedAt: Date
+  passwordResetToken: string
+  passwordResetExpires: Date
+}
+
+const userSchema = new mongoose.Schema<IUser, {}, IUserMethods>(
   {
     firstname: {
       type: String,
@@ -41,6 +65,9 @@ const userSchema = new mongoose.Schema(
     refreshToken: {
       type: String,
     },
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
   },
   {
     timestamps: true,

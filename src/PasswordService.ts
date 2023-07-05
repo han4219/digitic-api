@@ -8,6 +8,7 @@ export default class PasswordService implements PasswordPool {
   }
 
   hash(): string {
-    return bcrypt.hashSync(this.plainPassword, 10)
+    const salt = bcrypt.genSaltSync(10)
+    return bcrypt.hashSync(this.plainPassword, salt)
   }
 }

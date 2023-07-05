@@ -1,6 +1,22 @@
 import mongoose from 'mongoose'
 
-const productSchema = new mongoose.Schema(
+interface IProduct {
+  title: string
+  slug: string
+  description: string
+  price: number
+  category: string
+  brand: string
+  quantity: number
+  sold: number
+  images: any
+  color: string
+  ratings: mongoose.Schema.Types.ObjectId[]
+}
+
+interface IProductMethods {}
+
+const productSchema = new mongoose.Schema<IProduct, {}, IProductMethods>(
   {
     title: {
       type: String,
