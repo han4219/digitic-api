@@ -1,5 +1,8 @@
-import { UserType } from '../models/User'
+import { IUser, IUserMethods } from '../models/User'
+import mongoose from 'mongoose'
 
 export type HavingIdentity = {
-  user: UserType
+  user: mongoose.Document<unknown, {}, IUser> &
+    Omit<IUser & { _id: mongoose.Types.ObjectId }, keyof IUserMethods> &
+    IUserMethods
 }

@@ -1,12 +1,12 @@
 import mongoose from 'mongoose'
 import { role } from '../utils/role'
 
-interface IUserMethods {
+export interface IUserMethods {
   createPasswordResetToken(): Promise<string>
   isPasswordMatched(enteredPassword: string): Promise<boolean>
 }
 
-interface IUser {
+export interface IUser {
   firstname: string
   lastname: string
   email: string

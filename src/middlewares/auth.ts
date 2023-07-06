@@ -31,7 +31,7 @@ export const auth: Handler = async (
       throw new Error('User not found.')
     }
 
-    ;(req as HavingIdentity).user = user as UserType
+    ;(req as HavingIdentity).user = user
 
     return next()
   } catch (error) {
