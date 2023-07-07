@@ -11,7 +11,8 @@ interface IProduct {
   sold: number
   images: any
   color: string
-  ratings: mongoose.Schema.Types.ObjectId[]
+  ratings: string[]
+  totalRating: number
 }
 
 interface IProductMethods {}
@@ -66,6 +67,10 @@ const productSchema = new mongoose.Schema<IProduct, {}, IProductMethods>(
         postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
       },
     ],
+    totalRating: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

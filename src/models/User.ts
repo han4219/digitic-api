@@ -15,8 +15,8 @@ export interface IUser {
   role: string
   isActive: boolean
   cart: any
-  address: mongoose.Schema.Types.ObjectId
-  wishlist: mongoose.Schema.Types.ObjectId
+  address: string[]
+  wishlist: string[]
   refreshToken: string
   passwordChangedAt: Date
   passwordResetToken: string | null
