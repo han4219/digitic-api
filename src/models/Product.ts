@@ -11,7 +11,7 @@ interface IProduct {
   sold: number
   images: any
   color: string
-  ratings: string[]
+  ratings: { _id: string; star: number; comment: string; postedBy: string }[]
   totalRating: number
 }
 
@@ -64,6 +64,7 @@ const productSchema = new mongoose.Schema<IProduct, {}, IProductMethods>(
     ratings: [
       {
         star: Number,
+        comment: String,
         postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
       },
     ],
