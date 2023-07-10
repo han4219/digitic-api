@@ -10,6 +10,8 @@ import {
   likeBlog,
   updateBlog,
 } from '../controllers/BlogController'
+import { multerUpload, resizeBlogImage } from '../middlewares/uploadImages'
+import { uploadBlogImage } from '../controllers/BlogController/uploadBlogImage'
 
 export default (router: Router) => {
   router.get('/blogs', getAllBlogs)
@@ -19,4 +21,13 @@ export default (router: Router) => {
   router.get('/blog/:id', isObjectId, getBlog)
   router.put('/blog/:id', isObjectId, auth, isAdmin, updateBlog)
   router.delete('/blog/:id', isObjectId, auth, isAdmin, deleteBlog)
+  router.put(
+    '/blog/upload/:id',
+    isObjectId,
+    auth,
+    isAdmin,
+    multerUpload.array('images', 2),
+    resizeBlogImage,
+    uploadBlogImage
+  )
 }

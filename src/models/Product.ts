@@ -9,7 +9,8 @@ interface IProduct {
   brand: string
   quantity: number
   sold: number
-  images: any
+  image: string
+  images: string[]
   color: string
   ratings: { _id: string; star: number; comment: string; postedBy: string }[]
   totalRating: number
@@ -54,9 +55,10 @@ const productSchema = new mongoose.Schema<IProduct, {}, IProductMethods>(
       type: Number,
       default: 0,
     },
-    images: {
-      type: Array,
+    image: {
+      type: String,
     },
+    images: [{ type: String }],
     color: {
       type: String,
       required: true,

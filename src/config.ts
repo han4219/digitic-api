@@ -7,5 +7,10 @@ export default () => {
       user: process.env.MAIL_ID,
       pass: process.env.APP_PASS,
     },
+    cloudinary: {
+      name: process.env.CLOUDINARY_NAME,
+      apiKey: process.env.CLOUDINARY_API_KEY,
+      apiSecret: process.env.CLOUDINARY_API_SECRET,
+    },
   }
 }

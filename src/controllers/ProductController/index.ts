@@ -5,6 +5,7 @@ import { updateProduct } from './updateProduct'
 import { deleteProduct } from './deleteProduct'
 import { addToWishList } from './addToWishList'
 import { ratingProduct } from './ratingProduct'
+import { uploadProductImages } from './uploadProductImages'
 import { deleteRatingProduct } from './deleteRatingProduct'
 
 export {
@@ -15,5 +16,6 @@ export {
   getAllProducts,
   addToWishList,
   ratingProduct,
+  uploadProductImages,
   deleteRatingProduct,
 }

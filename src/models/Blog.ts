@@ -4,6 +4,7 @@ import { role } from '../utils/role'
 interface IBlog {
   title: string
   image: string
+  images: string[]
   author: string
   numViews: number
   category: string
@@ -47,6 +48,7 @@ const blogSchema = new mongoose.Schema<IBlog, {}, {}>(
       default:
         'https://st2.depositphotos.com/1006899/8421/i/600/depositphotos_84219350-stock-photo-word-blog-suspended-by-ropes.jpg',
     },
+    images: [{ type: String }],
     author: {
       type: String,
       default: role.ADMIN,
