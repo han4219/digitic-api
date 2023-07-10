@@ -6,6 +6,7 @@ import { getWishList } from './getWishList'
 import { activateUser } from './activateUser'
 import { updateUser } from './updateUserById'
 import { deleteUser } from './deleteUserById'
+import { updateAddress } from './updateAddress'
 import { deactivateUser } from './deactivateUser'
 
 export {
@@ -17,5 +18,6 @@ export {
   getAllUsers,
   getWishList,
   activateUser,
+  updateAddress,
   deactivateUser,
 }

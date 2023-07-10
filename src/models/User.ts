@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 import { role } from '../utils/role'
 
 export interface IUserMethods {
@@ -15,7 +15,7 @@ export interface IUser {
   role: string
   isActive: boolean
   cart: any
-  address: string[]
+  address: string
   wishlist: string[]
   refreshToken: string
   passwordChangedAt: Date
@@ -58,7 +58,7 @@ const userSchema = new mongoose.Schema<IUser, {}, IUserMethods>(
       type: Array,
       default: [],
     },
-    address: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }],
+    address: { type: String },
     wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
     refreshToken: {
       type: String,
