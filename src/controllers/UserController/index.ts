@@ -1,10 +1,11 @@
 import { getMe } from './getMe'
-import { getUser } from './getUserById'
 import { updateMe } from './updateMe'
-import { deleteUser } from './deleteUserById'
-import { updateUser } from './updateUserById'
+import { getUser } from './getUserById'
 import { getAllUsers } from './getAllUsers'
+import { getWishList } from './getWishList'
 import { activateUser } from './activateUser'
+import { updateUser } from './updateUserById'
+import { deleteUser } from './deleteUserById'
 import { deactivateUser } from './deactivateUser'
 
 export {
@@ -14,6 +15,7 @@ export {
   deleteUser,
   updateUser,
   getAllUsers,
+  getWishList,
   activateUser,
   deactivateUser,
 }
