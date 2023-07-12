@@ -14,7 +14,6 @@ export interface IUser {
   password: string
   role: string
   isActive: boolean
-  cart: any
   address: string
   wishlist: string[]
   refreshToken: string
@@ -53,10 +52,6 @@ const userSchema = new mongoose.Schema<IUser, {}, IUserMethods>(
     isActive: {
       type: Boolean,
       default: true,
-    },
-    cart: {
-      type: Array,
-      default: [],
     },
     address: { type: String },
     wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],

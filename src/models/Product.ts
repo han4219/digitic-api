@@ -5,6 +5,7 @@ interface IProduct {
   slug: string
   description: string
   price: number
+  priceDiscount?: number
   category: string
   brand: string
   quantity: number
@@ -38,6 +39,9 @@ const productSchema = new mongoose.Schema<IProduct, {}, IProductMethods>(
     price: {
       type: Number,
       required: true,
+    },
+    priceDiscount: {
+      type: Number,
     },
     category: {
       type: String,
