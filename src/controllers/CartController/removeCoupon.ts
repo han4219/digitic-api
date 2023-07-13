@@ -32,7 +32,6 @@ export const removeCoupon = async (
   const foundExistCoupon = foundCart.coupons.find(
     (coupon: any) => coupon._id.toString() === foundCoupon.id
   )
-  console.log(foundExistCoupon)
   if (!foundExistCoupon) {
     return res.status(422).json({
       message: 'Coupon has not been applied to this cart.',
