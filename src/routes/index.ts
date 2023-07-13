@@ -7,11 +7,13 @@ import product from './product'
 import blogCategory from './blogCategory'
 import authentication from './authentication'
 import productCategory from './productCategory'
+import cart from './cart'
 
 const router = express.Router()
 
 export default () => {
   user(router)
+  cart(router)
   blog(router)
   brand(router)
   coupon(router)

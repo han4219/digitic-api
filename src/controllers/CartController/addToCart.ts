@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { HavingIdentity } from '../../entities/HavingIdentity'
 import Cart, { ProductInCart } from '../../models/Cart'
 import Product from '../../models/Product'
+import Coupon from '../../models/Coupon'
 
 export const addToCart = async (
   req: Request | HavingIdentity,
@@ -19,6 +20,8 @@ export const addToCart = async (
   try {
     let totalPrice
     let totalPriceDiscount
+    let totalDiscountCoupon = 0
+    let totalPriceApplyCoupon
     let products: ProductInCart[] = []
 
     const foundCart = await Cart.findOne({
@@ -70,12 +73,6 @@ export const addToCart = async (
         }
       }
 
-      // await Promise.all(
-      //   body.products.map(
-      //     async (product: { id: string; count: number; color: string }) => {}
-      //   )
-      // )
-
       totalPrice = products.reduce((previousValue, currentValue) => {
         return previousValue + currentValue.count * currentValue.price
       }, 0)
@@ -87,12 +84,27 @@ export const addToCart = async (
         )
       }, 0)
 
+      for (let i = 0; i < foundCart.coupons.length; i++) {
+        const foundCoupon = await Coupon.findById(foundCart.coupons[i])
+
+        if (!foundCoupon) {
+          return res.status(422).json({
+            message: 'The coupon not found',
+          })
+        }
+        totalDiscountCoupon = totalDiscountCoupon + foundCoupon.discount
+      }
+
+      totalPriceApplyCoupon =
+        totalPriceDiscount - totalPriceDiscount * (totalDiscountCoupon / 100)
+
       const updatedCart = await Cart.findByIdAndUpdate(
         foundCart.id,
         {
           products,
           priceBeforeDiscount: totalPrice,
           priceAfterDiscount: totalPriceDiscount,
+          priceApplyCoupon: totalPriceApplyCoupon,
         },
         { new: true }
       )
@@ -146,6 +158,7 @@ export const addToCart = async (
       user: loggedInUser._id,
       priceAfterDiscount: totalPrice,
       priceBeforeDiscount: totalPriceDiscount,
+      priceApplyCoupon: totalPriceDiscount,
     })
 
     return res.status(200).json({

@@ -11,8 +11,10 @@ export type ProductInCart = {
 export interface ICart {
   products: ProductInCart[]
   user: mongoose.Schema.Types.ObjectId
+  coupons: mongoose.Schema.Types.ObjectId[]
   priceBeforeDiscount: number
   priceAfterDiscount: number
+  priceApplyCoupon: number
 }
 
 const CartSchema = new mongoose.Schema<ICart, {}, {}>(
@@ -30,8 +32,15 @@ const CartSchema = new mongoose.Schema<ICart, {}, {}>(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
+    coupons: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Coupon',
+      },
+    ],
     priceBeforeDiscount: Number,
     priceAfterDiscount: Number,
+    priceApplyCoupon: Number,
   },
   {
     timestamps: true,
