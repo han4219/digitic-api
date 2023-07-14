@@ -12,11 +12,20 @@ export enum orderStatus {
 export interface IOrder {
   orderBy: mongoose.Schema.Types.ObjectId
   orderStatus: string
-  paymentIntent: string
+  paymentIntent: {
+    id: string
+    method: string
+    amount: number
+    status: string
+    createdAt: Date
+    currency: string
+  }
   products: {
     product: string
     count: number
     color: string
+    price: number
+    priceDiscount: number
   }[]
 }
 
@@ -28,12 +37,21 @@ const orderSchema = new mongoose.Schema<IOrder, {}, {}>(
       default: orderStatus.NOT_PROCESSED,
       enum: orderStatus,
     },
-    paymentIntent: { type: String, default: 'paypal' },
+    paymentIntent: {
+      id: String,
+      method: String,
+      amount: Number,
+      status: String,
+      createdAt: Date,
+      currency: String,
+    },
     products: [
       {
         product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
         count: Number,
         color: String,
+        price: Number,
+        priceDiscount: Number,
       },
     ],
   },
