@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 export type ProductInCart = {
-  product: string
+  product: mongoose.Schema.Types.ObjectId
   count: number
   color: string
   price: number

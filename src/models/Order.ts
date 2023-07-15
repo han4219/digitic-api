@@ -9,13 +9,19 @@ export enum orderStatus {
   DELIVERED = 'Delivered',
 }
 
+export enum paymentMethod {
+  COD = 'COD',
+  PAYPAL = 'PAYPAL',
+}
+
 export interface IOrder {
+  coupons: mongoose.Schema.Types.ObjectId[]
   orderBy: mongoose.Schema.Types.ObjectId
   orderStatus: string
   paymentIntent: {
     id: string
-    method: string
-    amount: number
+    method: paymentMethod
+    cost: number
     status: string
     createdAt: Date
     currency: string
@@ -40,11 +46,17 @@ const orderSchema = new mongoose.Schema<IOrder, {}, {}>(
     paymentIntent: {
       id: String,
       method: String,
-      amount: Number,
+      cost: Number,
       status: String,
       createdAt: Date,
       currency: String,
     },
+    coupons: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Coupon',
+      },
+    ],
     products: [
       {
         product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
