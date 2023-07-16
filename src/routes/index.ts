@@ -10,7 +10,7 @@ import blogCategory from './blogCategory'
 import authentication from './authentication'
 import productCategory from './productCategory'
 
-const router = express.Router()
+const router = express.Router({ mergeParams: true })
 
 export default () => {
   user(router)
