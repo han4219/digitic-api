@@ -13,14 +13,14 @@ export default (router: Router) => {
   router.get('/orders', auth, getOrders)
   router.post('/orders/create-order', auth, createOrder)
   router.put('/order/cancel/:id', isObjectId, auth, cancelOrder)
+
+  // Admin
+  router.put('/admin/order/cancel/:id', isObjectId, auth, isAdmin, cancelOrder)
   router.put(
-    '/order/update-status/:id',
+    '/admin/order/update-status/:id',
     isObjectId,
     auth,
     isAdmin,
     updateOrderStatus
   )
-
-  // Admin
-  router.put('/admin/order/cancel/:id', isObjectId, auth, isAdmin, cancelOrder)
 }
