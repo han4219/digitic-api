@@ -16,21 +16,35 @@ import { multerUpload, resizeProductImage } from '../middlewares/uploadImages'
 
 export default (router: Router) => {
   router.get('/products', getAllProducts)
-  router.post('/products/create', auth, isAdmin, createProduct)
   router.put('/product/add-to-wishlist', auth, addToWishList)
   router.put('/product/rating', auth, ratingProduct)
   router.get('/product/:id', isObjectId, getProduct)
-  router.delete('/product/:id', isObjectId, auth, isAdmin, deleteProduct)
-  router.put('/product/:id', isObjectId, auth, isAdmin, updateProduct)
+
+  // Admin router
+  router.post('/admin/products/create', auth, isAdmin, createProduct)
   router.delete(
-    '/product/rating/:id',
+    '/admin/product/delete/:id',
+    isObjectId,
+    auth,
+    isAdmin,
+    deleteProduct
+  )
+  router.put(
+    '/admin/product/update/:id',
+    isObjectId,
+    auth,
+    isAdmin,
+    updateProduct
+  )
+  router.delete(
+    '/admin/product/rating/delete/:id',
     isObjectId,
     auth,
     isAdmin,
     deleteRatingProduct
   )
-  router.put(
-    '/product/upload/:id',
+  router.post(
+    '/admin/product/upload-images/:id',
     auth,
     isAdmin,
     multerUpload.array('images', 10),
