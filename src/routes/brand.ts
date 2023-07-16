@@ -10,9 +10,17 @@ import {
 } from '../controllers/BrandController'
 
 export default (router: Router) => {
-  router.post('/brands', auth, isAdmin, createBrand)
   router.get('/brands', getAllBrands)
   router.get('/brand/:id', isObjectId, getBrand)
-  router.put('/brand/:id', isObjectId, auth, isAdmin, updateBrand)
-  router.delete('/brand/:id', isObjectId, auth, isAdmin, deleteBrand)
+
+  // Admin router
+  router.post('/admin/brands/create', auth, isAdmin, createBrand)
+  router.put('/admin/brand/update/:id', isObjectId, auth, isAdmin, updateBrand)
+  router.delete(
+    '/admin/brand/delete/:id',
+    isObjectId,
+    auth,
+    isAdmin,
+    deleteBrand
+  )
 }
