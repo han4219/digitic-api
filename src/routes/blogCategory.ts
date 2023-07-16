@@ -10,9 +10,23 @@ import {
 } from '../controllers/BlogCategoryController'
 
 export default (router: Router) => {
-  router.post('/blog-categories', auth, isAdmin, createCategory)
   router.get('/blog-categories', getAllCategories)
   router.get('/blog-category/:id', isObjectId, getCategory)
-  router.put('/blog-category/:id', isObjectId, auth, isAdmin, updateCategory)
-  router.delete('/blog-category/:id', isObjectId, auth, isAdmin, deleteCategory)
+
+  // Admin router
+  router.post('/admin/blog-categories/create', auth, isAdmin, createCategory)
+  router.put(
+    '/admin/blog-category/update/:id',
+    isObjectId,
+    auth,
+    isAdmin,
+    updateCategory
+  )
+  router.delete(
+    '/admin/blog-category/delete/:id',
+    isObjectId,
+    auth,
+    isAdmin,
+    deleteCategory
+  )
 }
