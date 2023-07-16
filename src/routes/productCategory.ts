@@ -10,12 +10,20 @@ import {
 import { isObjectId } from '../middlewares/validate'
 
 export default (router: Router) => {
-  router.post('/product-categories', auth, isAdmin, createCategory)
   router.get('/product-categories', getAllCategories)
   router.get('/product-category/:id', isObjectId, getCategory)
-  router.put('/product-category/:id', isObjectId, auth, isAdmin, updateCategory)
+
+  // Admin router
+  router.post('/admin/product-categories/create', auth, isAdmin, createCategory)
+  router.put(
+    '/admin/product-category/update/:id',
+    isObjectId,
+    auth,
+    isAdmin,
+    updateCategory
+  )
   router.delete(
-    '/product-category/:id',
+    '/admin/product-category/delete/:id',
     isObjectId,
     auth,
     isAdmin,
