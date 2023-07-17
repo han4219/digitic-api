@@ -12,8 +12,14 @@ interface IProduct {
   sold: number
   image: string
   images: string[]
-  color: string
-  ratings: { _id: string; star: number; comment: string; postedBy: string }[]
+  colors: mongoose.Schema.Types.ObjectId[]
+  tags: []
+  ratings: {
+    _id: string
+    star: number
+    comment: string
+    postedBy: mongoose.Schema.Types.ObjectId
+  }[]
   totalRating: number
 }
 
@@ -63,10 +69,13 @@ const productSchema = new mongoose.Schema<IProduct, {}, IProductMethods>(
       type: String,
     },
     images: [{ type: String }],
-    color: {
-      type: String,
-      required: true,
-    },
+    colors: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Color',
+      },
+    ],
+    tags: [],
     ratings: [
       {
         star: Number,

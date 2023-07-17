@@ -10,7 +10,10 @@ export const getAllProducts = async (req: Request, res: Response) => {
   let queryStr = JSON.stringify(queryObj)
   queryStr = queryStr.replace(/\b(gte|gt|lt|lte)\b/g, (match) => `$${match}`)
 
-  let queryDocument = Product.find(JSON.parse(queryStr))
+  let queryDocument = Product.find(JSON.parse(queryStr)).populate(
+    'colors',
+    'name code'
+  )
 
   // Sorting
   if (req.query.sort) {

@@ -1,10 +1,12 @@
 import { Request, Response } from 'express'
 import Blog from '../../models/Blog'
 import { uploadImageToCloud } from '../../utils/cloudinary'
+import fs from 'fs'
 
 export const uploadBlogImage = async (req: Request, res: Response) => {
   const { id } = req.params
   const foundBlog = await Blog.findById(id)
+  const files = req.files as Express.Multer.File[]
 
   if (!foundBlog) {
     return res.status(404).json({
@@ -17,10 +19,13 @@ export const uploadBlogImage = async (req: Request, res: Response) => {
   try {
     const urls: string[] = []
 
-    for (let file of req.files as Express.Multer.File[]) {
-      const uploadedUrl = await uploader(file.path)
-      urls.push(uploadedUrl.url)
-    }
+    await Promise.all(
+      files.map(async (file) => {
+        const uploadedUrl = await uploader(file.path)
+        urls.push(uploadedUrl.url)
+        fs.unlinkSync(file.path)
+      })
+    )
 
     const newImages = foundBlog.images.concat(urls)
 

@@ -2,6 +2,7 @@ import express from 'express'
 import cart from './cart'
 import user from './user'
 import blog from './blog'
+import color from './color'
 import order from './order'
 import brand from './brand'
 import coupon from './coupon'
@@ -16,6 +17,7 @@ export default () => {
   user(router)
   cart(router)
   blog(router)
+  color(router)
   order(router)
   brand(router)
   coupon(router)

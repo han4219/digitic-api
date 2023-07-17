@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 export type ProductInCart = {
   product: mongoose.Schema.Types.ObjectId
   count: number
-  color: string
+  colors: string[]
   price: number
   priceDiscount?: number
 }
@@ -23,7 +23,7 @@ const CartSchema = new mongoose.Schema<ICart, {}, {}>(
       {
         product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
         count: Number,
-        color: String,
+        colors: [],
         price: Number,
         priceDiscount: Number,
       },

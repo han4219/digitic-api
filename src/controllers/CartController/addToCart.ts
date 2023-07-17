@@ -33,16 +33,19 @@ export const addToCart = async (
       products = products.concat(foundCart.products)
 
       for (let i = 0; i < body.products.length; i++) {
-        const product: { id: string; count: number; color: string } =
+        const product: { id: string; count: number; colors: string[] } =
           body.products[i]
 
-        if (!product.id || !product.count || !product.count) {
+        if (!product.id || !product.count || !product.colors) {
           return res.status(400).json({
             message: 'Invalid data',
           })
         }
 
-        const productData = await Product.findById(product.id)
+        const productData = await Product.findById(product.id).populate(
+          'colors',
+          'code'
+        )
 
         if (!productData) {
           return res.status(422).json({
@@ -57,7 +60,7 @@ export const addToCart = async (
         if (findProductIndex === -1) {
           products.push({
             product: productData.id,
-            color: productData.color,
+            colors: productData.colors as any,
             count: product.count,
             price: productData.price,
             priceDiscount: productData?.priceDiscount,
@@ -65,7 +68,7 @@ export const addToCart = async (
         } else {
           products[findProductIndex] = {
             product: productData.id,
-            color: productData.color,
+            colors: productData.colors as any,
             count: product.count + products[findProductIndex].count,
             price: productData.price,
             priceDiscount: productData?.priceDiscount,
@@ -126,7 +129,10 @@ export const addToCart = async (
         })
       }
 
-      const productData = await Product.findById(product.id)
+      const productData = await Product.findById(product.id).populate(
+        'colors',
+        'code'
+      )
 
       if (!productData) {
         return res.status(422).json({
@@ -136,7 +142,7 @@ export const addToCart = async (
 
       products.push({
         product: productData.id,
-        color: productData.color,
+        colors: productData.colors as any,
         count: product.count,
         price: productData.price,
         priceDiscount: productData?.priceDiscount,
