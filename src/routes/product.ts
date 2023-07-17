@@ -1,14 +1,15 @@
 import { Router } from 'express'
 import {
+  getProduct,
   addToWishList,
   createProduct,
   deleteProduct,
-  deleteRatingProduct,
   getAllProducts,
-  getProduct,
   ratingProduct,
   updateProduct,
+  deleteProductImages,
   uploadProductImages,
+  deleteRatingProduct,
 } from '../controllers/ProductController'
 import { isObjectId } from '../middlewares/validate'
 import { auth, isAdmin } from '../middlewares/auth'
@@ -44,11 +45,19 @@ export default (router: Router) => {
     deleteRatingProduct
   )
   router.post(
-    '/admin/product/upload-images/:id',
+    '/admin/product/images/upload/:id',
+    isObjectId,
     auth,
     isAdmin,
     multerUpload.array('images', 10),
     resizeProductImage,
     uploadProductImages
+  )
+  router.put(
+    '/admin/product/images/delete/:id',
+    isObjectId,
+    auth,
+    isAdmin,
+    deleteProductImages
   )
 }

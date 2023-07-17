@@ -1,8 +1,7 @@
+import fs from 'fs'
 import { Request, Response } from 'express'
-import Product from '../../models/Product'
+import Product, { IImageItem } from '../../models/Product'
 import { uploadImageToCloud } from '../../utils/cloudinary'
-import fs, { read } from 'fs'
-import { log } from 'util'
 
 export const uploadProductImages = async (req: Request, res: Response) => {
   const { id } = req.params
@@ -18,21 +17,22 @@ export const uploadProductImages = async (req: Request, res: Response) => {
     }
 
     const uploader = (filePath: string) => uploadImageToCloud(filePath)
-    const urls: string[] = []
+    const images: IImageItem[] = []
 
     await Promise.all(
       files.map(async (file) => {
         const uploadedUrl = await uploader(file.path)
-        urls.push(uploadedUrl.url)
+        images.push({ url: uploadedUrl.url, public_id: uploadedUrl.public_id })
+        fs.unlinkSync(file.path)
       })
     )
 
-    const newImages = foundProduct.images.concat(urls)
+    const newImages = foundProduct.images.concat(images)
 
     const updatedProduct = await Product.findByIdAndUpdate(
       id,
       {
-        image: newImages[0],
+        image: newImages[0].url,
         images: newImages,
       },
       { new: true }

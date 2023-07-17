@@ -7,6 +7,7 @@ import order from './order'
 import brand from './brand'
 import coupon from './coupon'
 import product from './product'
+import cloudinary from './cloudinary'
 import blogCategory from './blogCategory'
 import authentication from './authentication'
 import productCategory from './productCategory'
@@ -22,6 +23,7 @@ export default () => {
   brand(router)
   coupon(router)
   product(router)
+  cloudinary(router)
   blogCategory(router)
   authentication(router)
   productCategory(router)

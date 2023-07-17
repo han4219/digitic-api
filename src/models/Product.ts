@@ -1,6 +1,11 @@
 import mongoose from 'mongoose'
 
-interface IProduct {
+export interface IImageItem {
+  url: string
+  public_id: string
+}
+
+export interface IProduct {
   title: string
   slug: string
   description: string
@@ -11,7 +16,7 @@ interface IProduct {
   quantity: number
   sold: number
   image: string
-  images: string[]
+  images: IImageItem[]
   colors: mongoose.Schema.Types.ObjectId[]
   tags: []
   ratings: {
@@ -68,7 +73,7 @@ const productSchema = new mongoose.Schema<IProduct, {}, IProductMethods>(
     image: {
       type: String,
     },
-    images: [{ type: String }],
+    images: [],
     colors: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -94,7 +99,5 @@ const productSchema = new mongoose.Schema<IProduct, {}, IProductMethods>(
 )
 
 const Product = mongoose.model('Product', productSchema)
-
-export type ProductType = mongoose.InferSchemaType<typeof productSchema>
 
 export default Product
