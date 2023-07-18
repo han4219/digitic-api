@@ -6,6 +6,7 @@ import color from './color'
 import order from './order'
 import brand from './brand'
 import coupon from './coupon'
+import enquiry from './enquiry'
 import product from './product'
 import cloudinary from './cloudinary'
 import blogCategory from './blogCategory'
@@ -22,6 +23,7 @@ export default () => {
   order(router)
   brand(router)
   coupon(router)
+  enquiry(router)
   product(router)
   cloudinary(router)
   blogCategory(router)
