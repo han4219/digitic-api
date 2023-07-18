@@ -23,10 +23,14 @@ export const deleteProductImages = async (req: Request, res: Response) => {
       (image) => !public_ids.includes(image.public_id)
     )
 
-    const updatedProduct = await Product.findByIdAndUpdate(id, {
-      image: newImages[0].url || '',
-      images: newImages,
-    })
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      {
+        image: newImages[0]?.url || '',
+        images: newImages,
+      },
+      { new: true }
+    )
 
     return res.status(200).json({
       message: 'Product images updated.',
