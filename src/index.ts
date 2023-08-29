@@ -7,10 +7,12 @@ import cookieParser from 'cookie-parser'
 import connectDB from './utils/connectDB'
 import config from './config'
 import morgan from 'morgan'
+import cors from 'cors'
 
 dotenv.config()
 
 const app = express()
+app.use(cors())
 const PORT = config().port || 8080
 const server = http.createServer(app)
 
