@@ -22,6 +22,7 @@ server.listen(PORT, () => {
 
 connectDB()
 
+app.disable('x-powered-by')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
